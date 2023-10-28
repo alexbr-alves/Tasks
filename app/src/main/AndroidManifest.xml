@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.devmasterteam.tasks">
+    package="com.alexprojects.tasks">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -13,10 +13,10 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.Tasks">
         <activity
-            android:name=".view.RegisterActivity"
+            android:name="com.alexprojects.tasks.view.RegisterActivity"
             android:exported="true" />
         <activity
-            android:name=".view.LoginActivity"
+            android:name="com.alexprojects.tasks.view.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,10 +24,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.TaskFormActivity"
+            android:name="com.alexprojects.tasks.view.TaskFormActivity"
             android:exported="true" />
         <activity
-            android:name=".view.MainActivity"
+            android:name="com.alexprojects.tasks.view.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Tasks.NoActionBar" />
