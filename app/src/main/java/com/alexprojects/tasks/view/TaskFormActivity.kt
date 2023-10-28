@@ -3,7 +3,6 @@ package com.alexprojects.tasks.view
 import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import android.widget.Toast
@@ -12,7 +11,6 @@ import com.alexprojects.tasks.R
 import com.alexprojects.tasks.databinding.ActivityTaskFormBinding
 import com.alexprojects.tasks.service.model.PriorityModel
 import com.alexprojects.tasks.service.model.TaskModel
-import com.alexprojects.tasks.service.repository.TaskRepositorY
 import com.alexprojects.tasks.viewmodel.TaskFormViewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -89,12 +87,7 @@ class TaskFormActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
 
             this.dueDate = binding.buttonDate.text.toString()
         }
-        if (task.description != "" && task.dueDate != "") {
             viewModel.save(task)
-            finish()
-        } else {
-            Toast.makeText(this, R.string.task_create_error, Toast.LENGTH_SHORT).show()
-        }
     }
 
 }
