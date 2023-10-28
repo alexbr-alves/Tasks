@@ -1,16 +1,23 @@
 package com.alexprojects.tasks.view
 
+import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.DatePicker
 import androidx.lifecycle.ViewModelProvider
+import com.alexprojects.tasks.R
 import com.alexprojects.tasks.databinding.ActivityTaskFormBinding
+import com.alexprojects.tasks.service.repository.TaskRepositorY
 import com.alexprojects.tasks.viewmodel.TaskFormViewModel
+import java.text.SimpleDateFormat
+import java.util.Calendar
 
-class TaskFormActivity : AppCompatActivity(), View.OnClickListener {
+class TaskFormActivity : AppCompatActivity(), View.OnClickListener, DatePickerDialog.OnDateSetListener {
 
     private lateinit var viewModel: TaskFormViewModel
     private lateinit var binding: ActivityTaskFormBinding
+    private val dateFormat: SimpleDateFormat = SimpleDateFormat("dd/mm/yyyy")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +35,25 @@ class TaskFormActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View) {
-        TODO("Not yet implemented")
+        if (v.id == R.id.button_date) {
+            handleDate()
+        }
     }
+
+    override fun onDateSet(v: DatePicker, year: Int, month: Int, dayofMonth: Int) {
+        val calendar = Calendar.getInstance()
+        calendar.set(year, month, dayofMonth)
+
+        val dueDate = dateFormat.format(calendar.time)
+        binding.buttonDate.text = dueDate
+    }
+
+    private fun handleDate() {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val dayofMonth = calendar.get(Calendar.DAY_OF_MONTH)
+        DatePickerDialog(this, this, year, month, dayofMonth).show()
+    }
+
 }
