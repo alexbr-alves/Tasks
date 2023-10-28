@@ -8,6 +8,7 @@
     <string name="task_updated">Tarefa atualizada com sucesso!</string>
     <string name="task_created">Tarefa criada com sucesso!</string>
     <string name="task_removed">Tarefa removida com sucesso!</string>
+    <string name="task_create_error">Atenção! Você deve preencher todas as informações</string>
 
     <string name="email">E-mail</string>
     <string name="senha">Senha</string>
