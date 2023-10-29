@@ -11,24 +11,7 @@ import com.alexprojects.tasks.view.viewholder.TaskViewHolder
 class TaskAdapter : RecyclerView.Adapter<TaskViewHolder>() {
 
     private var listTasks: List<TaskModel> = arrayListOf()
-    private var listener: TaskListener = object  : TaskListener {
-        override fun onListClick(id: Int) {
-            TODO("Not yet implemented")
-        }
-
-        override fun onDeleteClick(id: Int) {
-            TODO("Not yet implemented")
-        }
-
-        override fun onCompleteClick(id: Int) {
-            TODO("Not yet implemented")
-        }
-
-        override fun onUndoClick(id: Int) {
-            TODO("Not yet implemented")
-        }
-
-    }
+    private lateinit var listener: TaskListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val inflater = LayoutInflater.from(parent.context)

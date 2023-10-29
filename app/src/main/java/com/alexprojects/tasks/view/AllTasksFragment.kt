@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alexprojects.tasks.databinding.FragmentAllTasksBinding
+import com.alexprojects.tasks.service.listener.TaskListener
 import com.alexprojects.tasks.view.adapter.TaskAdapter
 import com.alexprojects.tasks.viewmodel.TaskListViewModel
 
@@ -25,7 +26,8 @@ class AllTasksFragment : Fragment() {
         binding.recyclerAllTasks.layoutManager = LinearLayoutManager(context)
         binding.recyclerAllTasks.adapter = adapter
 
-        viewModel.list()
+        setupListener()
+
 
         observe()
 
@@ -37,9 +39,37 @@ class AllTasksFragment : Fragment() {
         _binding = null
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.list()
+    }
+
     private fun observe() {
         viewModel.tasks.observe(viewLifecycleOwner) {
             adapter.updateTasks(it)
         }
+    }
+
+    private fun setupListener() {
+        val listener = object : TaskListener {
+            override fun onListClick(id: Int) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onDeleteClick(id: Int) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onCompleteClick(id: Int) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onUndoClick(id: Int) {
+                TODO("Not yet implemented")
+            }
+
+        }
+
+        adapter.attachListener(listener)
     }
 }
