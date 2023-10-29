@@ -19,31 +19,27 @@ class TaskFormActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
 
     private lateinit var viewModel: TaskFormViewModel
     private lateinit var binding: ActivityTaskFormBinding
-    private val dateFormat: SimpleDateFormat = SimpleDateFormat("dd/mm/yyyy")
+    private val dateFormat: SimpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
     private var listPriority: List<PriorityModel> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Variáveis da classe
         viewModel = ViewModelProvider(this).get(TaskFormViewModel::class.java)
         binding = ActivityTaskFormBinding.inflate(layoutInflater)
 
-        // Eventos
-
-        binding.buttonDate.setOnClickListener { handleDate() }
-        binding.buttonSave.setOnClickListener { handleSave() }
-
+        binding.buttonDate.setOnClickListener {handleDate()}
+        binding.buttonSave.setOnClickListener {handleSave()}
+        setContentView(binding.root)
 
         viewModel.loadPriorities()
 
 
         // Layout
-        setContentView(binding.root)
+
 
         observe()
     }
-
 
     override fun onDateSet(v: DatePicker, year: Int, month: Int, dayofMonth: Int) {
         val calendar = Calendar.getInstance()
@@ -63,6 +59,19 @@ class TaskFormActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
 
     private fun observe() {
         handleSpinner()
+
+        viewModel.taskSave.observe(this) {
+            if (it.status()) {
+                toast(getString(R.string.task_created))
+                finish()
+            } else {
+                toast(it.message())
+            }
+        }
+    }
+
+    private fun toast(str: String) {
+        Toast.makeText(applicationContext, str, Toast.LENGTH_SHORT).show()
     }
 
     private fun handleSpinner() {
