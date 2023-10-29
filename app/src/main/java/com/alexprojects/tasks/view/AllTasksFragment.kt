@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.alexprojects.tasks.databinding.FragmentAllTasksBinding
+import com.alexprojects.tasks.view.adapter.TaskAdapter
 import com.alexprojects.tasks.viewmodel.TaskListViewModel
 
 class AllTasksFragment : Fragment() {
@@ -14,14 +16,17 @@ class AllTasksFragment : Fragment() {
     private lateinit var viewModel: TaskListViewModel
     private var _binding: FragmentAllTasksBinding? = null
     private val binding get() = _binding!!
+    private val adapter= TaskAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, b: Bundle?): View {
-        viewModel = ViewModelProvider(this).get(TaskListViewModel::class.java)
+        viewModel = ViewModelProvider(this)[TaskListViewModel::class.java]
         _binding = FragmentAllTasksBinding.inflate(inflater, container, false)
 
-        val recycler = binding.recyclerAllTasks
+        binding.recyclerAllTasks.layoutManager = LinearLayoutManager(context)
+        binding.recyclerAllTasks.adapter = adapter
 
-        // Cria os observadores
+        viewModel.list()
+
         observe()
 
         return binding.root
@@ -33,6 +38,8 @@ class AllTasksFragment : Fragment() {
     }
 
     private fun observe() {
-    // TODO CONTIUAR DEPOIS
+        viewModel.tasks.observe(viewLifecycleOwner) {
+            adapter.updateTasks(it)
+        }
     }
 }

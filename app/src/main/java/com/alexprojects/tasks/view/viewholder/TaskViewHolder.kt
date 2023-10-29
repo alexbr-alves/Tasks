@@ -15,9 +15,9 @@ class TaskViewHolder(private val itemBinding: RowTaskListBinding, val listener: 
      */
     fun bindData(task: TaskModel) {
 
-        itemBinding.textDescription.text = ""
-        itemBinding.textPriority.text = ""
-        itemBinding.textDueDate.text = ""
+        itemBinding.textDescription.text = task.description
+        itemBinding.textPriority.text = task.priority.toString()
+        itemBinding.textDueDate.text = task.dueDate
 
         // Eventos
         // itemBinding.textDescription.setOnClickListener { listener.onListClick(task.id) }
