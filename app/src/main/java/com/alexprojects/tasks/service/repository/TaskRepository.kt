@@ -9,7 +9,7 @@ import retrofit2.Call
 
 class TaskRepository(val context: Context): BaseRepository() {
 
-    val remote = RetrofitClient.getService(TaskService::class.java)
+    private val remote = RetrofitClient.getService(TaskService::class.java)
 
     fun create(task: TaskModel, listener: APIListener<Boolean>) {
         val call = remote.create(task.priority, task.description, task.dueDate, task.complete)
@@ -34,5 +34,13 @@ class TaskRepository(val context: Context): BaseRepository() {
 
     fun delete(id: Int, listener: APIListener<Boolean>) {
         executeCall(remote.delete(id), listener)
+    }
+
+    fun status(id: Int, complete: Boolean, listener: APIListener<Boolean>) {
+        if (complete) {
+            executeCall(remote.complete(id), listener)
+        } else {
+            executeCall(remote.undo(id), listener)
+        }
     }
 }

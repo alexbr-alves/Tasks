@@ -51,6 +51,12 @@ class AllTasksFragment : Fragment() {
                 Toast.makeText(context, it.message(), Toast.LENGTH_SHORT).show()
             }
         }
+
+        viewModel.status.observe(viewLifecycleOwner) {
+            if (!it.status()) {
+                Toast.makeText(context, it.message(), Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun setupListener() {
@@ -64,11 +70,11 @@ class AllTasksFragment : Fragment() {
             }
 
             override fun onCompleteClick(id: Int) {
-                TODO("Not yet implemented")
+                viewModel.status(id, true)
             }
 
             override fun onUndoClick(id: Int) {
-                TODO("Not yet implemented")
+                viewModel.status(id, false)
             }
 
         }
