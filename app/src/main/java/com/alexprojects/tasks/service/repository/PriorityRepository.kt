@@ -6,9 +6,6 @@ import com.alexprojects.tasks.service.model.PriorityModel
 import com.alexprojects.tasks.service.repository.local.TaskDatabase
 import com.alexprojects.tasks.service.repository.remote.PriorityService
 import com.alexprojects.tasks.service.repository.remote.RetrofitClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class PriorityRepository(val context: Context): BaseRepository() {
 
@@ -16,20 +13,7 @@ class PriorityRepository(val context: Context): BaseRepository() {
     private val database = TaskDatabase.getDatabase(context).priorityDAO()
 
     fun list(listener: APIListener<List<PriorityModel>>) {
-        val call = remote.list()
-        call.enqueue(object : Callback<List<PriorityModel>> {
-            override fun onResponse(
-                call: Call<List<PriorityModel>>,
-                response: Response<List<PriorityModel>>
-            ) {
-                handleResponse(response, listener)
-            }
-
-            override fun onFailure(call: Call<List<PriorityModel>>, t: Throwable) {
-                onFailure(listener)
-            }
-
-        })
+        executeCall(remote.list(), listener)
     }
 
     fun list(): List<PriorityModel> {
