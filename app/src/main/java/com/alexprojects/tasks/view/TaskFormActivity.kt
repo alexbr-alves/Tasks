@@ -24,20 +24,11 @@ class TaskFormActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         viewModel = ViewModelProvider(this).get(TaskFormViewModel::class.java)
         binding = ActivityTaskFormBinding.inflate(layoutInflater)
-
-        binding.buttonDate.setOnClickListener {handleDate()}
-        binding.buttonSave.setOnClickListener {handleSave()}
         setContentView(binding.root)
-
-        viewModel.loadPriorities()
-
-
-        // Layout
-
-
+        setupUI()
+        setupListeners()
         observe()
     }
 
@@ -49,6 +40,11 @@ class TaskFormActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
         binding.buttonDate.text = dueDate
     }
 
+    private fun setupListeners() {
+        binding.buttonDate.setOnClickListener {handleDate()}
+        binding.buttonSave.setOnClickListener {handleSave()}
+    }
+
     private fun handleDate() {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
@@ -57,9 +53,16 @@ class TaskFormActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
         DatePickerDialog(this, this, year, month, dayofMonth).show()
     }
 
+    private fun setupUI() {
+        viewModel.loadPriorities()
+    }
+
     private fun observe() {
         handleSpinner()
+        handleTaskSave()
+    }
 
+    private fun handleTaskSave() {
         viewModel.taskSave.observe(this) {
             if (it.status()) {
                 toast(getString(R.string.task_created))

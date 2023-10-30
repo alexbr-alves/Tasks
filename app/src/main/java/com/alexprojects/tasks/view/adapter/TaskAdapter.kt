@@ -27,6 +27,12 @@ class TaskAdapter : RecyclerView.Adapter<TaskViewHolder>() {
         return listTasks.count()
     }
 
+    fun updateTasks(list: List<TaskModel>) {
+        listTasks = list
+        notifyDataSetChanged()
+    }
+
+
     fun attachListener(taskListener: TaskListener) {
         listener = taskListener
     }

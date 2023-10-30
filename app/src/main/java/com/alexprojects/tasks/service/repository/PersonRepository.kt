@@ -20,11 +20,10 @@ class PersonRepository(val context: Context): BaseRepository() {
         call.enqueue(object : Callback<PersonModel> {
             override fun onResponse(call: Call<PersonModel>, response: Response<PersonModel>) {
                 handleResponse(response, listener)
-
             }
 
             override fun onFailure(call: Call<PersonModel>, t: Throwable) {
-                listener.onFailure(R.string.ERROR_UNEXPECTED.toString())
+                onFailure(listener)
             }
 
         })
