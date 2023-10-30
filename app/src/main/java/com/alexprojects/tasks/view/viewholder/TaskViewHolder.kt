@@ -11,15 +11,36 @@ import java.text.SimpleDateFormat
 class TaskViewHolder(private val itemBinding: RowTaskListBinding, val listener: TaskListener) :
     RecyclerView.ViewHolder(itemBinding.root) {
 
-    /**
-     * Atribui valores aos elementos de interface e também eventos
-     */
+
     fun bindData(task: TaskModel) {
         setupUI(task)
+        dialogDeliteTesk(task)
+    }
 
+    private fun setupUI(task: TaskModel) = itemBinding.run {
+        textDescription.text = task.description
+        textPriority.text = task.priorityDescription
+        val date = SimpleDateFormat("yyyy-MM-dd").parse(task.dueDate)
+        textDueDate.text =  SimpleDateFormat("dd/MM/yyyy").format(date)
 
+        if (task.complete) {
+            imageTask.setImageResource(R.drawable.ic_done)
+        } else {
+            imageTask.setImageResource(R.drawable.ic_todo)
+        }
 
+        textDescription.setOnClickListener { listener.onListClick(task.id) }
 
+        imageTask.setOnClickListener {
+           if (task.complete) {
+               listener.onUndoClick(task.id)
+           } else {
+               listener.onCompleteClick(task.id)
+           }
+        }
+    }
+
+    private fun dialogDeliteTesk(task: TaskModel) {
         itemBinding.textDescription.setOnLongClickListener {
             AlertDialog.Builder(itemView.context)
                 .setTitle(R.string.remocao_de_tarefa)
@@ -30,31 +51,6 @@ class TaskViewHolder(private val itemBinding: RowTaskListBinding, val listener: 
                 .setNeutralButton(R.string.cancelar, null)
                 .show()
             true
-        }
-
-    }
-
-    private fun setupUI(task: TaskModel) {
-        val date = SimpleDateFormat("yyyy-MM-dd").parse(task.dueDate)
-
-        itemBinding.textDescription.text = task.description
-        itemBinding.textPriority.text = task.priority.toString()
-        itemBinding.textDueDate.text =  SimpleDateFormat("dd/MM/yyyy").format(date)
-
-        if (task.complete) {
-            itemBinding.imageTask.setImageResource(R.drawable.ic_done)
-        } else {
-            itemBinding.imageTask.setImageResource(R.drawable.ic_todo)
-        }
-
-        itemBinding.textDescription.setOnClickListener { listener.onListClick(task.id) }
-
-        itemBinding.imageTask.setOnClickListener {
-           if (task.complete) {
-               listener.onUndoClick(task.id)
-           } else {
-               listener.onCompleteClick(task.id)
-           }
         }
     }
 }

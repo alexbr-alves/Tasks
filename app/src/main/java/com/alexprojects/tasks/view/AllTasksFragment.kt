@@ -25,10 +25,7 @@ class AllTasksFragment : Fragment() {
 
         binding.recyclerAllTasks.layoutManager = LinearLayoutManager(context)
         binding.recyclerAllTasks.adapter = adapter
-
         setupListener()
-
-
         observe()
 
         return binding.root
