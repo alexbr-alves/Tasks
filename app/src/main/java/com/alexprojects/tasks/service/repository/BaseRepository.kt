@@ -2,10 +2,8 @@ package com.alexprojects.tasks.service.repository
 
 import android.content.Context
 import android.net.ConnectivityManager
-import android.net.Network
 import android.net.NetworkCapabilities
 import android.os.Build
-import androidx.annotation.RequiresApi
 import com.alexprojects.tasks.R
 import com.alexprojects.tasks.service.constants.TaskConstants
 import com.alexprojects.tasks.service.listener.APIListener

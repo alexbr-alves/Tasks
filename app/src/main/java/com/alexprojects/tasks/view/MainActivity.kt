@@ -29,11 +29,7 @@ class MainActivity : AppCompatActivity() {
         binding.appBarMain.fab.setOnClickListener {
             startActivity(Intent(applicationContext, TaskFormActivity::class.java))
         }
-
-        // Navegação
         setupNavigation()
-
-        // Observadores
         observe()
     }
 
