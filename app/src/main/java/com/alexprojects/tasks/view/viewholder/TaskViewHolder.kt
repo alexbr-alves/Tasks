@@ -1,6 +1,8 @@
 package com.alexprojects.tasks.view.viewholder
 
 import android.app.AlertDialog
+import android.content.Context
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.alexprojects.tasks.R
 import com.alexprojects.tasks.databinding.RowTaskListBinding
@@ -8,7 +10,7 @@ import com.alexprojects.tasks.service.listener.TaskListener
 import com.alexprojects.tasks.service.model.TaskModel
 import java.text.SimpleDateFormat
 
-class TaskViewHolder(private val itemBinding: RowTaskListBinding, val listener: TaskListener) :
+class TaskViewHolder(private val itemBinding: RowTaskListBinding, val listener: TaskListener, val context: Context) :
     RecyclerView.ViewHolder(itemBinding.root) {
 
 
@@ -17,8 +19,18 @@ class TaskViewHolder(private val itemBinding: RowTaskListBinding, val listener: 
         dialogDeliteTesk(task)
     }
 
+    private fun getColor(id: Int): Int {
+        return when(id) {
+            1 -> R.color.green
+            2 -> R.color.yellow
+            3 -> R.color.blue
+            else -> {R.color.red}
+        }
+    }
+
     private fun setupUI(task: TaskModel) = itemBinding.run {
         textDescription.text = task.description
+        constraint.setBackgroundColor(ContextCompat.getColor(context, getColor(task.priority)))
         textPriority.text = task.priorityDescription
         val date = SimpleDateFormat("yyyy-MM-dd").parse(task.dueDate)
         textDueDate.text =  SimpleDateFormat("dd/MM/yyyy").format(date)
@@ -29,7 +41,7 @@ class TaskViewHolder(private val itemBinding: RowTaskListBinding, val listener: 
             imageTask.setImageResource(R.drawable.ic_todo)
         }
 
-        textDescription.setOnClickListener { listener.onListClick(task.id) }
+        constraintBody.setOnClickListener { listener.onListClick(task.id) }
 
         imageTask.setOnClickListener {
            if (task.complete) {
@@ -41,7 +53,7 @@ class TaskViewHolder(private val itemBinding: RowTaskListBinding, val listener: 
     }
 
     private fun dialogDeliteTesk(task: TaskModel) {
-        itemBinding.textDescription.setOnLongClickListener {
+        itemBinding.constraintBody.setOnLongClickListener {
             AlertDialog.Builder(itemView.context)
                 .setTitle(R.string.remocao_de_tarefa)
                 .setMessage(R.string.remover_tarefa)

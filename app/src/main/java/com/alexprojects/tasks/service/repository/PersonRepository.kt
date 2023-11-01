@@ -9,6 +9,7 @@ import com.alexprojects.tasks.service.repository.remote.RetrofitClient
 class PersonRepository(val context: Context): BaseRepository() {
 
     private val remote = RetrofitClient.getService(PersonService::class.java)
+
     fun login(email: String, password: String, listener: APIListener<PersonModel>) {
         executeCall(remote.login(email, password), listener)
     }
