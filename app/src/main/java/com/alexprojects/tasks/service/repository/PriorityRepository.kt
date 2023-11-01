@@ -1,6 +1,9 @@
 package com.alexprojects.tasks.service.repository
 
 import android.content.Context
+import android.os.Build
+import androidx.annotation.RequiresApi
+import com.alexprojects.tasks.R
 import com.alexprojects.tasks.service.listener.APIListener
 import com.alexprojects.tasks.service.model.PriorityModel
 import com.alexprojects.tasks.service.repository.local.TaskDatabase
@@ -13,6 +16,10 @@ class PriorityRepository(val context: Context): BaseRepository() {
     private val database = TaskDatabase.getDatabase(context).priorityDAO()
 
     fun list(listener: APIListener<List<PriorityModel>>) {
+        if (!isConnectionAvailable(context)) {
+            listener.onFailure(context.getString(R.string.ERROR_INTERNET_CONNECTION))
+        }
+
         executeCall(remote.list(), listener)
     }
 

@@ -1,5 +1,11 @@
 package com.alexprojects.tasks.service.repository
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkCapabilities
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.alexprojects.tasks.R
 import com.alexprojects.tasks.service.constants.TaskConstants
 import com.alexprojects.tasks.service.listener.APIListener
@@ -24,5 +30,30 @@ open class BaseRepository() {
                 listener.onFailure(R.string.ERROR_UNEXPECTED.toString())
             }
         })
+    }
+
+    fun isConnectionAvailable(context: Context): Boolean {
+        var result = false
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val activeNet = cm.activeNetwork ?: return false
+            val networkCapabilities = cm.getNetworkCapabilities(activeNet) ?: return false
+
+            result = when {
+                networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+                networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+                else -> false
+            }
+        } else {
+            if (cm.activeNetworkInfo != null) {
+                result = when (cm.activeNetworkInfo!!.type) {
+                    ConnectivityManager.TYPE_WIFI -> true
+                    ConnectivityManager.TYPE_MOBILE -> true
+                    ConnectivityManager.TYPE_ETHERNET -> true
+                    else -> false
+                }
+            }
+        }
+        return result
     }
 }
