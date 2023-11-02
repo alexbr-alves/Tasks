@@ -32,8 +32,7 @@ class TaskFormActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
         setupUI()
         setupListeners()
         loadDataFromActivity()
-        observe()
-        supportActionBar?.hide()
+        subscriptionUI()
     }
 
     override fun onDateSet(v: DatePicker, year: Int, month: Int, dayofMonth: Int) {
@@ -44,7 +43,12 @@ class TaskFormActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
         binding.buttonDate.text = dueDate
     }
 
-    private fun observe() {
+    private fun setupUI() {
+        supportActionBar?.hide()
+        viewModel.loadPriorities()
+    }
+
+    private fun subscriptionUI() {
         handleSpinner()
         handleTaskSave()
         handleTaskLoad()
@@ -69,10 +73,6 @@ class TaskFormActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
         val month = calendar.get(Calendar.MONTH)
         val dayofMonth = calendar.get(Calendar.DAY_OF_MONTH)
         DatePickerDialog(this, this, year, month, dayofMonth).show()
-    }
-
-    private fun setupUI() {
-        viewModel.loadPriorities()
     }
 
     private fun getIndex(priorityId: Int): Int {

@@ -22,4 +22,5 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     fun loadUserName() {
         _name.value = sharedPreferences.get(TaskConstants.SHARED.PERSON_NAME)
     }
+
 }

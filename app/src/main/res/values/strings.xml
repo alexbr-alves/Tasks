@@ -34,4 +34,7 @@
     <string name="todas_tarefas">Tarefas</string>
     <string name="proximos_7_dias">Próximos 7 dias</string>
 
+    <string name="biometric_title">Autenticação Biométrica</string>
+    <string name="biometric_cancelar">Cancelar</string>
+
 </resources>

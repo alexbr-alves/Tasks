@@ -15,16 +15,14 @@ class RetrofitClient private constructor() {
 
         private fun getRetrofitInstance(): Retrofit {
             var httpClient = OkHttpClient.Builder()
-            httpClient.addInterceptor(object : Interceptor {
-                override fun intercept(chain: Interceptor.Chain): Response {
-                    val request = chain.request()
-                        .newBuilder()
-                        .addHeader(TaskConstants.HEADER.TOKEN_KEY, token)
-                        .addHeader(TaskConstants.HEADER.PERSON_KEY, personKey)
-                        .build()
-                    return chain.proceed(request)
-                }
-            })
+            httpClient.addInterceptor { chain ->
+                val request = chain.request()
+                    .newBuilder()
+                    .addHeader(TaskConstants.HEADER.TOKEN_KEY, token)
+                    .addHeader(TaskConstants.HEADER.PERSON_KEY, personKey)
+                    .build()
+                chain.proceed(request)
+            }
 
             if (!::INSTANCE.isInitialized) {
                 INSTANCE = Retrofit.Builder()
@@ -35,9 +33,11 @@ class RetrofitClient private constructor() {
             }
             return INSTANCE
         }
+
         fun <T> getService(serviceClass: Class<T>) : T {
             return getRetrofitInstance().create(serviceClass)
         }
+
         fun addHeaders(tokenValue: String, personKeyValue: String){
             token = tokenValue
             personKey = personKeyValue

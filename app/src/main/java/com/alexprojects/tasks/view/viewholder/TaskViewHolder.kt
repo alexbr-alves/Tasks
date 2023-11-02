@@ -10,7 +10,11 @@ import com.alexprojects.tasks.service.listener.TaskListener
 import com.alexprojects.tasks.service.model.TaskModel
 import java.text.SimpleDateFormat
 
-class TaskViewHolder(private val itemBinding: RowTaskListBinding, val listener: TaskListener, val context: Context) :
+class TaskViewHolder(
+    private val itemBinding: RowTaskListBinding,
+    val listener: TaskListener,
+    val context: Context
+) :
     RecyclerView.ViewHolder(itemBinding.root) {
 
 
@@ -23,7 +27,7 @@ class TaskViewHolder(private val itemBinding: RowTaskListBinding, val listener: 
         textDescription.text = task.description
         textPriority.text = task.priorityDescription
         val date = SimpleDateFormat("yyyy-MM-dd").parse(task.dueDate)
-        textDueDate.text =  SimpleDateFormat("dd/MM/yyyy").format(date)
+        textDueDate.text = SimpleDateFormat("dd/MM/yyyy").format(date)
 
         if (task.complete) {
             imageTask.setImageResource(R.drawable.ic_done)
@@ -34,11 +38,11 @@ class TaskViewHolder(private val itemBinding: RowTaskListBinding, val listener: 
         constraintBody.setOnClickListener { listener.onListClick(task.id) }
 
         imageTask.setOnClickListener {
-           if (task.complete) {
-               listener.onUndoClick(task.id)
-           } else {
-               listener.onCompleteClick(task.id)
-           }
+            if (task.complete) {
+                listener.onUndoClick(task.id)
+            } else {
+                listener.onCompleteClick(task.id)
+            }
         }
     }
 

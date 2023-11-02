@@ -13,68 +13,28 @@ import com.alexprojects.tasks.R
 import com.alexprojects.tasks.databinding.ActivityLoginBinding
 import com.alexprojects.tasks.viewmodel.LoginViewModel
 
-class LoginActivity : AppCompatActivity(), View.OnClickListener {
+class LoginActivity : AppCompatActivity() {
 
     private lateinit var viewModel: LoginViewModel
     private lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
         binding = ActivityLoginBinding.inflate(layoutInflater)
-
         setContentView(binding.root)
-
-        binding.buttonLogin.setOnClickListener(this)
-        binding.textRegister.setOnClickListener(this)
-
-        viewModel.verifyAutentication()
+        setupUI()
+        subscriptionUI()
+    }
+    private fun setupUI() {
         supportActionBar?.hide()
-
-        observe()
     }
 
-    override fun onClick(v: View) {
-        when (v.id) {
-            R.id.button_login -> handleLogin()
-            R.id.text_register -> showRegisterActivity()
-        }
-    }
+    private fun subscriptionUI() {
+        viewModel.verifyAutentication()
+        binding.buttonLogin.setOnClickListener { handleLogin() }
+        binding.textRegister.setOnClickListener {showRegisterActivity()}
 
-    private fun biometricAutentication() {
-        if (BiometricHelper.isBiometricAvalible(this)) {
-
-            val executor = ContextCompat.getMainExecutor(this)
-
-            val bio = BiometricPrompt(this, executor, object : BiometricPrompt.AuthenticationCallback() {
-                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                    showMainActivity()
-                    finish()
-                    super.onAuthenticationSucceeded(result)
-                }
-
-            })
-            val info = BiometricPrompt.PromptInfo.Builder()
-                .setTitle("Autenticação Biométrica")
-                .setSubtitle("")
-                .setDescription("")
-                .setNegativeButtonText("Cancelar")
-                .build()
-            bio.authenticate(info)
-        }
-
-    }
-
-    private fun showMainActivity() {
-        startActivity(Intent(applicationContext, MainActivity::class.java))
-    }
-
-    private fun showRegisterActivity() {
-        startActivity(Intent(this, RegisterActivity::class.java))
-    }
-
-    private fun observe() {
         viewModel.login.observe(this) {
             if (it.status()) {
                 showMainActivity()
@@ -89,6 +49,38 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 biometricAutentication()
             }
         }
+
+    }
+
+    private fun biometricAutentication() {
+        if (BiometricHelper.isBiometricAvalible(this)) {
+
+            val executor = ContextCompat.getMainExecutor(this)
+
+            val bio =
+                BiometricPrompt(this, executor, object : BiometricPrompt.AuthenticationCallback() {
+                    override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                        showMainActivity()
+                        finish()
+                        super.onAuthenticationSucceeded(result)
+                    }
+
+                })
+            val info = BiometricPrompt.PromptInfo.Builder()
+                .setTitle(getString(R.string.biometric_title))
+                .setNegativeButtonText(getString(R.string.biometric_cancelar))
+                .build()
+            bio.authenticate(info)
+        }
+
+    }
+
+    private fun showMainActivity() {
+        startActivity(Intent(applicationContext, MainActivity::class.java))
+    }
+
+    private fun showRegisterActivity() {
+        startActivity(Intent(this, RegisterActivity::class.java))
     }
 
     private fun handleLogin() {
