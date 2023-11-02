@@ -8,6 +8,16 @@
     android:padding="16dp"
     tools:context=".view.RegisterActivity">
 
+    <ImageView
+        android:id="@+id/image_logo"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/ic_logotipo"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"/>
+
     <EditText
         android:id="@+id/edit_name"
         style="@style/EditTextStile"
@@ -18,9 +28,9 @@
         android:drawableStart="@drawable/ic_name"
         android:hint="@string/nome"
         android:inputType="textPersonName"
+        app:layout_constraintTop_toBottomOf="@+id/image_logo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/edit_email"

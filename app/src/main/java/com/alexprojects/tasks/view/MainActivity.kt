@@ -43,9 +43,6 @@ class MainActivity : AppCompatActivity() {
         observe()
     }
 
-    override fun onResume() {
-        super.onResume()
-    }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
