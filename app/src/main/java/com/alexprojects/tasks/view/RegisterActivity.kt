@@ -22,6 +22,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
 
         binding.buttonSave.setOnClickListener(this)
+        supportActionBar?.hide()
         observe()
         setContentView(binding.root)
     }
