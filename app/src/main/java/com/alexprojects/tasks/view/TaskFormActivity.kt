@@ -33,6 +33,7 @@ class TaskFormActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
         setupListeners()
         loadDataFromActivity()
         observe()
+        supportActionBar?.hide()
     }
 
     override fun onDateSet(v: DatePicker, year: Int, month: Int, dayofMonth: Int) {

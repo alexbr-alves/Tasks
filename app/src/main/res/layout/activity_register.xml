@@ -4,15 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/shape_background"
     android:padding="16dp"
     tools:context=".view.RegisterActivity">
 
     <EditText
         android:id="@+id/edit_name"
+        style="@style/EditTextStile"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
+        android:drawableStart="@drawable/ic_name"
         android:hint="@string/nome"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,9 +24,11 @@
 
     <EditText
         android:id="@+id/edit_email"
+        style="@style/EditTextStile"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:drawableStart="@drawable/ic_mail"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,9 +37,11 @@
 
     <EditText
         android:id="@+id/edit_password"
+        style="@style/EditTextStile"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:drawableStart="@drawable/ic_lock"
         android:hint="@string/senha"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"

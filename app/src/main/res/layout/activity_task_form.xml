@@ -9,9 +9,11 @@
 
     <EditText
         android:id="@+id/edit_description"
+        style="@style/EditTextStile"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="#fafafa"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         android:hint="@string/descricao"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,6 +21,7 @@
 
     <View
         android:id="@+id/view_description"
+        style="@style/viewDivider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/black"
@@ -26,6 +29,7 @@
 
     <TextView
         android:id="@+id/text_priority"
+        android:textColor="@color/black"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -38,13 +42,13 @@
         android:id="@+id/spinner_priority"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="#c1c1c1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_priority" />
 
     <View
         android:id="@+id/view_complete"
+        style="@style/viewDivider"
         android:layout_width="0dp"
         android:layout_height="1dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -53,6 +57,7 @@
 
     <CheckBox
         android:id="@+id/check_complete"
+        android:textColor="@color/black"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -64,27 +69,41 @@
 
     <View
         android:id="@+id/view_date"
+        style="@style/viewDivider"
         android:layout_width="0dp"
         android:layout_height="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/check_complete" />
 
-    <Button
-        android:id="@+id/button_date"
+    <TextView
+        android:id="@+id/text_due_date_limit"
+        android:textColor="@color/black"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:background="@android:color/transparent"
-        android:gravity="center_vertical"
-        android:textColor="@color/black"
-        android:hint="@string/clique_para_selecionar_a_data"
+        android:text="@string/data_limite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view_date" />
 
+    <Button
+        android:id="@+id/button_date"
+        android:textColorHint="@color/black"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:hint="@string/clique_para_selecionar_a_data"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_due_date_limit" />
+
     <View
         android:id="@+id/view_save"
+        style="@style/viewDivider"
         android:layout_width="0dp"
         android:layout_height="1dp"
         app:layout_constraintEnd_toEndOf="parent"

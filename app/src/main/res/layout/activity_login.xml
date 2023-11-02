@@ -4,11 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/shape_background"
     android:padding="16dp"
     tools:context=".view.LoginActivity">
 
+    <ImageView
+        android:id="@+id/image_logo"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/ic_logotipo"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"/>
+
     <EditText
         android:id="@+id/edit_email"
+        style="@style/EditTextStile"
+        android:drawableStart="@drawable/ic_mail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
@@ -16,10 +29,12 @@
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/image_logo" />
 
     <EditText
         android:id="@+id/edit_password"
+        android:drawableStart="@drawable/ic_lock"
+        style="@style/EditTextStile"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -45,6 +60,7 @@
         android:id="@+id/text_new_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/white"
         android:text="@string/nao_tem_uma_conta"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/text_register"
@@ -56,8 +72,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:textColor="@color/white"
         android:layout_toEndOf="@id/text_new_account"
-        android:textColor="@color/purple_500"
         android:text="@string/cadastre_se"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
