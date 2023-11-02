@@ -24,7 +24,7 @@
     <style name="Theme.Tasks.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
     <!-- buttom -->
     <style name="DefaultButtom">
-        <item name="android:paddingVertical">12dp</item>
+        <item name="android:paddingVertical">8dp</item>
         <item name="android:paddingHorizontal">100dp</item>
     </style>
 
