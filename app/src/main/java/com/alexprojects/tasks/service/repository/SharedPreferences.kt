@@ -3,9 +3,7 @@ package com.alexprojects.tasks.service.repository
 import android.content.Context
 import android.content.SharedPreferences
 
-/**
- * Acesso a dados rápidos do projeto - SharedPreferences
- */
+
 class SharedPreferences(context: Context) {
 
     private val preferences: SharedPreferences =
