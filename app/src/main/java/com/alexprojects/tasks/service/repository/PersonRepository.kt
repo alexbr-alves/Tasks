@@ -17,9 +17,19 @@ class PersonRepository(val context: Context): BaseRepository() {
     fun login(email: String, password: String, listener: APIListener<PersonModel>) {
         if (!isConnectionAvailable(context)) {
             listener.onFailure(context.getString(R.string.ERROR_INTERNET_CONNECTION))
+            return
         }
 
         executeCall(remote.login(email, password), listener)
+    }
+
+    fun create(name: String, email: String, password: String, listener: APIListener<PersonModel>) {
+        if (!isConnectionAvailable(context)) {
+            listener.onFailure(context.getString(R.string.ERROR_INTERNET_CONNECTION))
+            return
+        }
+
+        executeCall(remote.create(name, email, password), listener)
     }
 
 }

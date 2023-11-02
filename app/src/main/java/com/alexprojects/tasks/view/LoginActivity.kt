@@ -8,6 +8,9 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.alexprojects.tasks.R
 import com.alexprojects.tasks.databinding.ActivityLoginBinding
+import com.alexprojects.tasks.service.constants.TaskConstants
+import com.alexprojects.tasks.service.constants.TaskConstants.*
+import com.alexprojects.tasks.service.repository.SharedPreferences
 import com.alexprojects.tasks.viewmodel.LoginViewModel
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
@@ -18,33 +21,39 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Variáveis da classe
         viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
         binding = ActivityLoginBinding.inflate(layoutInflater)
 
-        // Layout
         setContentView(binding.root)
 
-        // Eventos
         binding.buttonLogin.setOnClickListener(this)
         binding.textRegister.setOnClickListener(this)
 
         viewModel.verifyLoggedUser()
 
-        // Observadores
+
         observe()
     }
 
     override fun onClick(v: View) {
         when(v.id) {
             R.id.button_login -> handleLogin()
+            R.id.text_register -> showRegisterActivity()
         }
+    }
+
+    private fun showMainActivity() {
+        startActivity(Intent(applicationContext, MainActivity::class.java))
+    }
+
+    private fun showRegisterActivity() {
+        startActivity(Intent(this, RegisterActivity::class.java))
     }
 
     private fun observe() {
         viewModel.login.observe(this) {
             if (it.status()) {
-                startActivity(Intent(applicationContext, MainActivity::class.java))
+                showMainActivity()
                 finish()
             } else {
                 Toast.makeText(applicationContext, it.message(), Toast.LENGTH_SHORT).show()

@@ -19,6 +19,7 @@ interface PersonService {
     ): Call<PersonModel>
 
     @POST("Authentication/Create")
+    @FormUrlEncoded
     fun create(
         @Field("name") name: String,
         @Field("email") email: String,
