@@ -11,14 +11,14 @@ import com.alexprojects.tasks.service.model.PriorityModel
 import com.alexprojects.tasks.service.model.ValidationModel
 import com.alexprojects.tasks.service.repository.PersonRepository
 import com.alexprojects.tasks.service.repository.PriorityRepository
-import com.alexprojects.tasks.service.repository.SecurityPreferences
+import com.alexprojects.tasks.service.repository.SharedPreferences
 import com.alexprojects.tasks.service.repository.remote.RetrofitClient
 
 class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
     private val personRepository = PersonRepository(application.applicationContext)
     private val priorityRepository = PriorityRepository(application.applicationContext)
-    private val securityPreferences = SecurityPreferences(application.applicationContext)
+    private val sharedPreferences = SharedPreferences(application.applicationContext)
 
     private val _login = MutableLiveData<ValidationModel>()
     val login: LiveData<ValidationModel> = _login
@@ -30,9 +30,9 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         personRepository.login(email, password, object : APIListener<PersonModel> {
 
             override fun onSuccess(result: PersonModel) {
-                securityPreferences.store(TaskConstants.SHARED.TOKEN_KEY, result.token)
-                securityPreferences.store(TaskConstants.SHARED.PERSON_KEY, result.personKey)
-                securityPreferences.store(TaskConstants.SHARED.PERSON_NAME, result.name)
+                sharedPreferences.store(TaskConstants.SHARED.TOKEN_KEY, result.token)
+                sharedPreferences.store(TaskConstants.SHARED.PERSON_KEY, result.personKey)
+                sharedPreferences.store(TaskConstants.SHARED.PERSON_NAME, result.name)
 
                 RetrofitClient.addHeaders(result.token, result.personKey)
                 _login.value = ValidationModel()
@@ -47,8 +47,8 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun verifyLoggedUser() {
-        val token = securityPreferences.get(TaskConstants.SHARED.TOKEN_KEY)
-        val person = securityPreferences.get(TaskConstants.SHARED.PERSON_KEY)
+        val token = sharedPreferences.get(TaskConstants.SHARED.TOKEN_KEY)
+        val person = sharedPreferences.get(TaskConstants.SHARED.PERSON_KEY)
 
         RetrofitClient.addHeaders(token, person)
 
