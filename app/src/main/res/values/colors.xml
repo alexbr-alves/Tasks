@@ -11,4 +11,15 @@
     <color name="blue">#0000FF</color>
     <color name="yellow">#4848ff</color>
     <color name="red">#ff5050</color>
+    <color name="purple_200_2">#FFBB86FC</color>
+    <color name="purple_500_2">#6462a3</color>
+    <color name="purple_700_2">#3b3a61</color>
+    <color name="teal_200_2">#FF03DAC5</color>
+    <color name="teal_700_2">#FF018786</color>
+    <color name="black_2">#FF000000</color>
+    <color name="white_2">#FFFFFFFF</color>
+    <color name="pink">#f33769</color>
+    <color name="grey_700">#FFFFFF</color>
+    <color name="grey_500">#c1c1c1</color>
+    <color name="grey_200">#535353</color>
 </resources>
