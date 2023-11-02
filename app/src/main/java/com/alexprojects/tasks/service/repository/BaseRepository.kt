@@ -14,13 +14,18 @@ import retrofit2.Response
 
 open class BaseRepository() {
 
-    fun<T> executeCall(call: Call<T>, listener: APIListener<T>){
+    fun <T> executeCall(call: Call<T>, listener: APIListener<T>) {
         call.enqueue(object : Callback<T> {
             override fun onResponse(call: Call<T>, response: Response<T>) {
                 if (response.code() == TaskConstants.HTTP.SUCCESS) {
                     response.body()?.let { listener.onSuccess(it) }
                 } else {
-                    listener.onFailure(Gson().fromJson(response.errorBody()!!.string(), String::class.java))
+                    listener.onFailure(
+                        Gson().fromJson(
+                            response.errorBody()!!.string(),
+                            String::class.java
+                        )
+                    )
                 }
             }
 
@@ -54,4 +59,5 @@ open class BaseRepository() {
         }
         return result
     }
+
 }

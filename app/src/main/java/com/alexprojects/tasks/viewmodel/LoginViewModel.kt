@@ -42,8 +42,6 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
             override fun onFailure(message: String) {
                 _login.value = ValidationModel(message)
             }
-
-
         })
     }
 
@@ -54,9 +52,8 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         RetrofitClient.addHeaders(token, person)
 
         val logged = (token != "" && person != "")
-       // _loggedUser.value = logged
 
-        if (!logged){
+        if (!logged) {
             priorityRepository.list(object : APIListener<List<PriorityModel>> {
                 override fun onSuccess(result: List<PriorityModel>) {
                     priorityRepository.save(result)
@@ -65,11 +62,11 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                 override fun onFailure(message: String) {
                     null
                 }
-
             })
         }
 
         _loggedUser.value = (logged && BiometricHelper.isBiometricAvalible(getApplication()))
 
     }
+
 }

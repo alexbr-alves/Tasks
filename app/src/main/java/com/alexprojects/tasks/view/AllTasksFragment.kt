@@ -26,12 +26,9 @@ class AllTasksFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, b: Bundle?): View {
         viewModel = ViewModelProvider(this)[TaskListViewModel::class.java]
         _binding = FragmentAllTasksBinding.inflate(inflater, container, false)
-
-        binding.recyclerAllTasks.layoutManager = LinearLayoutManager(context)
-        binding.recyclerAllTasks.adapter = adapter
-
         taskFilter = requireArguments().getInt(TaskConstants.BUNDLE.TASKFILTER, 0)
 
+        setupRecycle()
         setupListener()
         observe()
 
@@ -48,6 +45,11 @@ class AllTasksFragment : Fragment() {
         viewModel.list(taskFilter)
     }
 
+    private fun setupRecycle() {
+        binding.recyclerAllTasks.layoutManager = LinearLayoutManager(context)
+        binding.recyclerAllTasks.adapter = adapter
+    }
+
     private fun observe() {
         viewModel.tasks.observe(viewLifecycleOwner) {
             adapter.updateTasks(it)
@@ -57,7 +59,6 @@ class AllTasksFragment : Fragment() {
                 Toast.makeText(context, it.message(), Toast.LENGTH_SHORT).show()
             }
         }
-
         viewModel.status.observe(viewLifecycleOwner) {
             if (!it.status()) {
                 Toast.makeText(context, it.message(), Toast.LENGTH_SHORT).show()

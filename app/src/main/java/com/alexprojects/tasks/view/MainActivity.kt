@@ -26,27 +26,27 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-
         setSupportActionBar(binding.appBarMain.toolbar)
-
-        binding.appBarMain.fab.setOnClickListener {
-            startActivity(Intent(applicationContext, TaskFormActivity::class.java))
-        }
-        viewModel.loadUserName()
-
         setupNavigation()
-        observe()
+        subscriptionUI()
     }
-
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    private fun subscriptionUI() {
+        viewModel.loadUserName()
+        binding.appBarMain.fab.setOnClickListener { showTaskFormActivity() }
+        viewModel.name.observe(this) {
+            val header = binding.navView.getHeaderView(0)
+            header.findViewById<TextView>(R.id.text_name).text = it
+        }
+
     }
 
     private fun setupNavigation() {
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
         navView.setNavigationItemSelectedListener {
             if (it.itemId == R.id.nav_logout) {
                 viewModel.logout()
-                startActivity(Intent(applicationContext, LoginActivity::class.java))
+                showLoginActivity()
                 finish()
             } else {
                 NavigationUI.onNavDestinationSelected(it, navController)
@@ -72,10 +72,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun observe() {
-        viewModel.name.observe(this) {
-            val header = binding.navView.getHeaderView(0)
-            header.findViewById<TextView>(R.id.text_name).text = it
-        }
+    private fun showTaskFormActivity() {
+        startActivity(Intent(applicationContext, TaskFormActivity::class.java))
+    }
+
+    private fun showLoginActivity() {
+        startActivity(Intent(applicationContext, LoginActivity::class.java))
     }
 }

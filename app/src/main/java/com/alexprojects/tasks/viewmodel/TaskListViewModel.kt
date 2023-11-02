@@ -71,5 +71,4 @@ class TaskListViewModel(application: Application) : AndroidViewModel(application
         taskRepository.status(id, complete, listener)
     }
 
-
 }

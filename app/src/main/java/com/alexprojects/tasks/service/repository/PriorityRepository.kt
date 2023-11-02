@@ -10,7 +10,7 @@ import com.alexprojects.tasks.service.repository.local.TaskDatabase
 import com.alexprojects.tasks.service.repository.remote.PriorityService
 import com.alexprojects.tasks.service.repository.remote.RetrofitClient
 
-class PriorityRepository(val context: Context): BaseRepository() {
+class PriorityRepository(val context: Context) : BaseRepository() {
 
     private val remote = RetrofitClient.getService(PriorityService::class.java)
     private val database = TaskDatabase.getDatabase(context).priorityDAO()
@@ -48,6 +48,7 @@ class PriorityRepository(val context: Context): BaseRepository() {
         fun getDescription(id: Int): String {
             return cache[id] ?: ""
         }
+
         fun setDescription(id: Int, str: String) {
             cache[id] = str
         }

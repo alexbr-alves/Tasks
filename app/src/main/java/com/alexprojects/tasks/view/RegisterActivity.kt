@@ -10,36 +10,32 @@ import com.alexprojects.tasks.R
 import com.alexprojects.tasks.databinding.ActivityRegisterBinding
 import com.alexprojects.tasks.viewmodel.RegisterViewModel
 
-class RegisterActivity : AppCompatActivity(), View.OnClickListener {
+class RegisterActivity : AppCompatActivity() {
 
     private lateinit var viewModel: RegisterViewModel
     private lateinit var binding: ActivityRegisterBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         viewModel = ViewModelProvider(this).get(RegisterViewModel::class.java)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
-
-        binding.buttonSave.setOnClickListener(this)
-        supportActionBar?.hide()
-        observe()
+        setupUI()
+        subscriptionUI()
         setContentView(binding.root)
     }
 
-    private fun observe() {
+    private fun setupUI() {
+        supportActionBar?.hide()
+    }
+
+    private fun subscriptionUI() {
+        binding.buttonSave.setOnClickListener { handleSave() }
         viewModel.user.observe(this) {
             if (it.status()) {
                 startActivity(Intent(this, MainActivity::class.java))
             } else {
                 Toast.makeText(this, it.message(), Toast.LENGTH_SHORT).show()
             }
-        }
-    }
-
-    override fun onClick(v: View) {
-        if (v.id == R.id.button_save) {
-            handleSave()
         }
     }
 
