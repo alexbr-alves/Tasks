@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(applicationContext, TaskFormActivity::class.java))
         }
         viewModel.loadUserName()
+
         setupNavigation()
         observe()
     }
