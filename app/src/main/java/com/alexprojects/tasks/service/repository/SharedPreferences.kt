@@ -6,7 +6,7 @@ import android.content.SharedPreferences
 /**
  * Acesso a dados rápidos do projeto - SharedPreferences
  */
-class SecurityPreferences(context: Context) {
+class SharedPreferences(context: Context) {
 
     private val preferences: SharedPreferences =
         context.getSharedPreferences("taskShared", Context.MODE_PRIVATE)

@@ -19,18 +19,8 @@ class TaskViewHolder(private val itemBinding: RowTaskListBinding, val listener: 
         dialogDeliteTesk(task)
     }
 
-    private fun getColor(id: Int): Int {
-        return when(id) {
-            1 -> R.color.green
-            2 -> R.color.yellow
-            3 -> R.color.blue
-            else -> {R.color.red}
-        }
-    }
-
     private fun setupUI(task: TaskModel) = itemBinding.run {
         textDescription.text = task.description
-        constraint.setBackgroundColor(ContextCompat.getColor(context, getColor(task.priority)))
         textPriority.text = task.priorityDescription
         val date = SimpleDateFormat("yyyy-MM-dd").parse(task.dueDate)
         textDueDate.text =  SimpleDateFormat("dd/MM/yyyy").format(date)
