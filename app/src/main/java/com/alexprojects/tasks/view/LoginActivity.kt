@@ -5,12 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import com.alexprojects.tasks.helper.BiometricHelper
 import com.alexprojects.tasks.R
 import com.alexprojects.tasks.databinding.ActivityLoginBinding
-import com.alexprojects.tasks.service.constants.TaskConstants
-import com.alexprojects.tasks.service.constants.TaskConstants.*
-import com.alexprojects.tasks.service.repository.SharedPreferences
 import com.alexprojects.tasks.viewmodel.LoginViewModel
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
@@ -29,18 +29,41 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         binding.buttonLogin.setOnClickListener(this)
         binding.textRegister.setOnClickListener(this)
 
-        viewModel.verifyLoggedUser()
+        viewModel.verifyAutentication()
         supportActionBar?.hide()
-
 
         observe()
     }
 
     override fun onClick(v: View) {
-        when(v.id) {
+        when (v.id) {
             R.id.button_login -> handleLogin()
             R.id.text_register -> showRegisterActivity()
         }
+    }
+
+    private fun biometricAutentication() {
+        if (BiometricHelper.isBiometricAvalible(this)) {
+
+            val executor = ContextCompat.getMainExecutor(this)
+
+            val bio = BiometricPrompt(this, executor, object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    showMainActivity()
+                    finish()
+                    super.onAuthenticationSucceeded(result)
+                }
+
+            })
+            val info = BiometricPrompt.PromptInfo.Builder()
+                .setTitle("Autenticação Biométrica")
+                .setSubtitle("")
+                .setDescription("")
+                .setNegativeButtonText("Cancelar")
+                .build()
+            bio.authenticate(info)
+        }
+
     }
 
     private fun showMainActivity() {
@@ -63,13 +86,12 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         viewModel.loggedUser.observe(this) {
             if (it) {
-                startActivity(Intent(applicationContext, MainActivity::class.java))
-                finish()
+                biometricAutentication()
             }
         }
     }
 
-    private fun handleLogin(){
+    private fun handleLogin() {
         val email = binding.editEmail.text.toString()
         val password = binding.editPassword.text.toString()
 
